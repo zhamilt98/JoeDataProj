@@ -30,6 +30,24 @@ A data management web application to be used by the Vertical Lead of Financial S
 ```
 npm run devStart
 ```
+## TODO
+* Style Project Select on Main page
+* Update Website name and Logo
+* Clean up Styling on Project Page
+  * Section Banners Cleaner
+  * Scroll bar not default
+  * Table row hover color
+  * New row button styling
+  * Save and Exit Button Styling
+  * Project Details section styling
+* Functionality on Project page
+  *Delete row deletes from DB
+  *Time sheets file upload entry method
+  *New sheet manual entry table placement
+*Clean and comment all code
+  
+  
+  
 
 ## Authors
 
