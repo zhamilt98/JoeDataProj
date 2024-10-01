@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/project.css">
+    <title>My Website</title>
+    
+  </head>
+  <body>
+    <main>
+      <h1>Welcome to Project <%=locals.name%></h1>
+        <form action="/project/<%=locals.name%>" method="POST">
+        <div class="projDetails">
+        <p>Project Details</p>
+        <%let term=new Date(parseInt(locals.term));%>
+        <input type="text" name="Proj_Name" value="<%=locals.name%>"/>
+        <input type="text" name="NTE_AMT" value=<%=locals.NTE || ""%>>
+        <input type="text" name="Term" value="<%=term.toLocaleDateString() %>">
+        <input type="text" name="PrcsNum" value=<%=locals.purchase || ""%>>
+        </div>
+        <div class="projConsultants">
+        <p class="collapsible active">Consultant Info 
+          <i class="bi bi-chevron-down"></i>
+        </p>
+        <div style="display: block;">
+        <table id="consTable" class="table">
+            <thead>
+                <tr>
+                    <th>Consultant</th>
+                    <th>Placement</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Recruiter</th>
+                    <th>Bill Rate</th>
+                    <th>Pay Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(locals.consults){locals.consults.forEach((con)=> { 
+                    let start=new Date(parseInt(con.Start_Date));
+                    let end=new Date(parseInt(con.End_Date));%>
+                <tr>
+                    <td><input type="text" name="Consultant" value="<%=con.ConsultantFN +' '+ con.ConsultantLN%>"></td>
+                    <td><input type="text" name="Placement" value="<%=con.Placement%>"></td>
+                    <td><input type="text" name="StartDate" value="<%=start.toLocaleDateString()%>"></td>
+                    <td><input type="text" name="EndDate" value="<%=end.toLocaleDateString()%>"></td>
+                    <td><input type="text" name="Recruiter" value="<%=con.Recruiter%>"></td>
+                    <td><input type="text" name="Bill_Rate" value="<%=con.Bill_Rate%>"></td>
+                    <td><input type="text" name="Pay_Rate" value="<%=con.Pay_Rate%>"></td>
+                    <td><button type="button" class="delete-row" data-id="<%= con.Placement %>">X</button></td>
+                </tr>
+                <%})};%>
+            </tbody>
+        </table>
+        <button type="button" onclick="addConsRow()">New Consultant</button>
+        </div>
+        </div>
+        <div>
+        <p class="collapsible active">Invoices</p>
+        <div style="display: block;">
+        <table id="invsTable" class="table">
+            <thead>
+            <tr>
+                <th>Invoice Num</th>
+                <th>Anticipated Date</th>
+                <th>Billables</th>
+                <th>Expense</th>
+                <th>Surplus</th>
+                <th>Sent Accounting</th>
+                <th>Sent Coupa</th>
+                <th>Coupa Num</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if(locals.invs){locals.invs.forEach((inv)=> {
+                let ant=new Date(parseInt(inv.Anticipated));
+                let acc=new Date(parseInt(inv.Sent_Accounting));
+                let coup=new Date(parseInt(inv.Sent_Coupa));%>
+            <tr>
+                <td><input type="text" name="InvoiceNum" value="<%=inv.InvoiceNum%>"></td>
+                <td><input type="text" name="Anticipated_Date" value="<%=ant.toLocaleDateString()%>"></td>
+                <td><input type="text" name="Billables" value="<%=inv.Billables%>"></td>
+                <td><input type="text" name="Expenses" value="<%=inv.Expenses%>"></td>
+                <td><input type="text" name="Surplus" value="<%=inv.Surplus%>"></td>
+                <td><input type="text" name="Sent_Accounting" value="<%=acc.toLocaleDateString()%>"></td>
+                <td><input type="text" name="Sent_Coupa" value="<%=coup.toLocaleDateString()%>"></td>
+                <td><input type="text" name="Coupa_Num" value="<%=inv.Coupa_Num%>"></td>
+                <td><button type="button" class="delete-row" data-id="<%= inv.InvoiceNum %>">X</button></td>
+            </tr>
+            <%})};%>
+        </tbody>
+            
+        </table>
+        <button type="button" onclick="addInvsRow()">New Invoice</button>
+      </div>
+      </div>
+      <div id="timesheets">
+        <p class="collapsible active">Time Sheets</p>
+        <div style="display: block;">
+        <% 
+        function getUniqueValues(arr, key) {
+            return [...new Set(arr.map(obj => obj[key]))];
+          }
+        if(locals.times){
+          const uniqueSheets = getUniqueValues(times, 'SheetID');
+            uniqueSheets.forEach((sheet)=> {%>
+                <p class="collapsible active">Timesheet <%=sheet%></p>
+                <div style="display: block;">
+                <table class="table">
+                <tr>
+                    <th>Consultant</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Hours</th>
+                    <td><button type="button" class="delete-TS" data-id="<%= sheet %>">X</button></td>
+                </tr>
+                <%locals.times.forEach((tim)=> {
+                    
+                    if(tim.SheetID==sheet){
+                    let startTS=new Date(parseInt(tim.Start_Date));
+                    let endTS=new Date(parseInt(tim.End_Date));%>
+                <tr>
+                    <td><input type="text" name="consTS" value="<%=tim.ConsultantFN+' '+tim.ConsultantLN%>"></td>
+                    <td><input type="text" name="startTS" value="<%=startTS.toLocaleDateString()%>"></td>
+                    <td><input type="text" name="endTS" value="<%=endTS.toLocaleDateString()%>"></td>
+                    <td><input type="text" name="hoursTS" value="<%=tim.Hours%>"></td>
+                    <td><button type="button" class="delete-row" data-id="<%= tim.ConsultantFN+' '+tim.ConsultantLN %>">X</button></td>
+                </tr>
+            <%}});%>
+            </table>
+          </div>
+        <%})};%>
+      
+  
+        <button type="button" onclick="addTimesheet()">New Sheet</button>
+      </div>
+    </div>
+        <button type="submit">Save</button>
+        <a href="/"><button type="button">Exit</button></a>
+    </form>
+    <script>
+       var coll = document.getElementsByClassName("collapsible");
+        var i;
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {  
+              content.style.display = "none";
+              console.log(arrow[0].className)
+            } else {
+              content.style.display = "block";
+            }
+          });
+        }
+      function addConsRow() {
+        const table = document.getElementById("consTable").getElementsByTagName("tbody")[0];
+        const newRow = table.insertRow();
+        const newCell1 = newRow.insertCell();
+        const newCell2 = newRow.insertCell();
+        const newCell3 = newRow.insertCell();
+        const newCell4 = newRow.insertCell();
+        const newCell5 = newRow.insertCell();
+        const newCell6 = newRow.insertCell();
+        const newCell7 = newRow.insertCell();
+        const newCell8 = newRow.insertCell();
+        newCell1.innerHTML = "<input type='text' name='Consultant'>";
+        newCell2.innerHTML = "<input type='text' name='Placement'>";
+        newCell3.innerHTML = "<input type='text' name='StartDate'>";
+        newCell4.innerHTML = "<input type='text' name='EndDate'>";
+        newCell5.innerHTML = "<input type='text' name='Recruiter'>";
+        newCell6.innerHTML = "<input type='text' name='Bill_Rate'>";
+        newCell7.innerHTML = "<input type='text' name='Pay_Rate'>";
+
+      }
+      function addInvsRow() {
+        const table = document.getElementById("invsTable").getElementsByTagName("tbody")[0];
+        const newRow = table.insertRow();
+        const newCell1 = newRow.insertCell();
+        const newCell2 = newRow.insertCell();
+        const newCell3 = newRow.insertCell();
+        const newCell4 = newRow.insertCell();
+        const newCell5 = newRow.insertCell();
+        const newCell6 = newRow.insertCell();
+        const newCell7 = newRow.insertCell();
+        const newCell8 = newRow.insertCell();
+        newCell1.innerHTML = "<input type='text' name='InvoiceNum'>";
+        newCell2.innerHTML = "<input type='text' name='Anticipated_Date'>";
+        newCell3.innerHTML = "<input type='text' name='Billables'>";
+        newCell4.innerHTML = "<input type='text' name='Expenses'>";
+        newCell5.innerHTML = "<input type='text' name='Surplus'>";
+        newCell6.innerHTML = "<input type='text' name='Sent_Accounting'>";
+        newCell7.innerHTML = "<input type='text' name='Sent_Coupa'>";
+        newCell8.innerHTML = "<input type='text' name='Coupa_Num'>";
+      }
+      function addTimesheet() {
+        const text = document.createElement("p");
+        const table = document.createElement("table");
+        table.classList="table";
+        const div = document.getElementById("timesheets")
+        const header = table.createTHead()
+        var row = header.insertRow(0); 
+        const hCell1 = row.insertCell();
+        const hCell2 = row.insertCell();
+        const hCell3 = row.insertCell();
+        const hCell4 = row.insertCell();                    
+        hCell1.innerHTML = " <th>Consultant</th>";
+        hCell2.innerHTML = "<th>Start Date</th>";
+        hCell3.innerHTML = "<th>End Date</th>";
+        hCell4.innerHTML = "<th>Hours</th>";
+        text.innerHTML="<p>Timesheet </p>"
+        const newRow = table.insertRow();
+        const newCell1 = newRow.insertCell();
+        const newCell2 = newRow.insertCell();
+        const newCell3 = newRow.insertCell();
+        const newCell4 = newRow.insertCell();
+        newCell1.innerHTML = "<input type='text' name='consTS'>";
+        newCell2.innerHTML = "<input type='text' name='startTS'>";
+        newCell3.innerHTML = "<input type='text' name='endTS'>";
+        newCell4.innerHTML = "<input type='text' name='hoursTS'>";
+        div.appendChild(text);
+        div.appendChild(table);
+      }
+      const deleteButtons = document.querySelectorAll('.delete-row');
+      console.log(deleteButtons)
+      deleteButtons.forEach(button => {
+      button.addEventListener('click', function() {
+      const rowId = this.dataset.id;
+      console.log(rowId)
+      // fetch(`/delete/${rowId}`, { method: 'DELETE' })
+      //   .then(response => {
+      //     if (response.ok) {
+          // Row successfully deleted, remove it from the DOM
+          this.closest('tr').remove();
+        // } else {
+        //   // Handle error
+        //   console.error('Error deleting row');
+        // }
+  //     });
+});
+});
+const deleteButtonsTS = document.querySelectorAll('.delete-TS');
+      console.log(deleteButtonsTS)
+      deleteButtonsTS.forEach(button => {
+      button.addEventListener('click', function() {
+      const rowId = this.dataset.id;
+      console.log(rowId)
+      // fetch(`/delete/${rowId}`, { method: 'DELETE' })
+      //   .then(response => {
+      //     if (response.ok) {
+          // Row successfully deleted, remove it from the DOM
+          this.closest('table').remove();
+        // } else {
+        //   // Handle error
+        //   console.error('Error deleting row');
+        // }
+  //     });
+});
+});
+    </script>
+    </main>
+  </body>
+</html>

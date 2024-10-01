@@ -1,0 +1,71 @@
+html{
+        height: 100%;
+    width: 100%;
+}
+body{
+    background-image: url('background.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
+main{
+    display:grid;
+    grid-template-columns: 1fr 5fr 5fr 1fr;
+    grid-template-rows: 1fr 4fr  1fr;
+    height: 100%;
+    width: 100%;
+}
+h1{
+    grid-column: 2/4;
+    justify-self: center;
+    color: white;
+}
+img{
+   color: white;
+    justify-self: center;
+    align-self: center;
+    height: 60%;
+    width: 60%;
+}
+a{
+    text-decoration: none;
+    text-align: center;
+}
+a:hover{
+    opacity: 30%;
+}
+p{
+    font-size: x-large;
+    font-family: Helvetica, sans-serif,monospace;
+    font-weight: bold;
+    color:white;
+}
+#newBtn{
+    grid-column: 2/3;
+    grid-row: 2/3;
+    margin: 25px;
+    width: 50%;
+    justify-self: right;
+    align-self: center;
+}
+#editBtn{
+    grid-column:3/4;
+    grid-row: 2/3;
+    background: none;
+    justify-self: left;
+    align-self: center;
+    width: 50%;
+    margin: 25px;
+}
+select{
+    grid-column: 3/4;
+    grid-row: 3/4;
+}
+#selectBox{
+    grid-row: 3/4;
+    grid-column: 3/4;
+    justify-self: stretch;
+    visibility: hidden;
+}

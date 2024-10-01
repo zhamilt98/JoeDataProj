@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <title>My Website</title>
+
+  </head>
+  <body>
+    <main>
+        <h1>Welcome to My Website</h1>
+        <a id= "newBtn" href="/project"><img src="add.png" ><p>New</p></a>
+        <a id= "editBtn" onclick="showSelect()" ><img src="edit.png" ><p>Edit</p></a>
+        <div id="selectBox">
+        <select name="projects" id="proj">
+          <% locals.projs.forEach((proj)=> {%>
+            <option value=<%=proj.Proj_Name%>><%=proj.Proj_Name%></option>
+          <%});%>
+        </select>
+        <a id="submitBtn" href="/project/<%=locals.projs[0].Proj_Name%>"><button>Submit</button></a>
+      </div>
+    </main>
+	<script>    
+      var edit = document.querySelector("#editBtn");
+      var selectElement = document.querySelector("select");
+      var selectOptionElements = selectElement.querySelectorAll("option");
+      var selectBox=document.querySelector("#selectBox")
+      var submit = document.querySelector("#submitBtn");
+
+      selectElement.addEventListener("change", function (evt) { 
+        submit.setAttribute('href','/project/'+selectOptionElements[selectElement.selectedIndex].innerText)
+      })
+      edit.addEventListener("click",function(evt){
+        selectBox.style.visibility="visible"
+      })
+  </script>
+  </body>
+</html>
