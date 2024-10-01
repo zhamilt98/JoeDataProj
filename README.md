@@ -1,44 +1,40 @@
-Project Title
+# Project Title
+
 Data management application.
 
-Description
-A data management web application to be used by the Vertical Lead of Financial Services at Brooksource. 
+## Description
 
-Getting Started
-Dependencies
-Describe any prerequisites, libraries, OS version, etc., needed before installing program.
-ex. Windows 10
-Installing
-How/where to download your program
-Any modifications needed to be made to files/folders
-Executing program
-How to run the program
-Step-by-step bullets
-code blocks for commands
-Help
-Any advise for common problems or issues.
+A data management web application to be used by the Vertical Lead of Financial Services at Brooksource. Primary use case is to track and recieve metrics on his different projects in a more streamlined and user friendly way. This code contains the front end web application for entry and editing of data. The SQL DB and app will be hosted on Microsoft Azure and utilize PowerBI for metric dashboarding.
 
-command to run if program contains helper info
-Authors
-Contributors names and contact info
+## Getting Started
 
-ex. Dominique Pizzie
-ex. @DomPizzie
+### Dependencies
 
-Version History
-0.2
-Various bug fixes and optimizations
-See commit change or See release history
-0.1
-Initial Release
-License
-This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
+*    "body-parser": "^1.20.3",
+*    "ejs": "^3.1.10",
+*    "ejs-lint": "^2.0.0",
+*    "express": "^4.19.2",
+*    "mysql2": "^3.11.0"
+*    MySQLDB - using table schemas in the SQL Schema Directory
 
-Acknowledgments
-Inspiration, code snippets, etc.
+### Installing
 
-awesome-readme
-PurpleBooth
-dbader
-zenorocha
-fvcproductions
+* Download the project
+* Open in VSCode
+* Import table Schemas to MySQL
+* Install above Dependencies
+
+### Executing program
+
+* Run
+```
+npm run devStart
+```
+
+## Authors
+
+* Zachary Hamilton
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE.md file for details
