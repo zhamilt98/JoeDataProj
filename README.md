@@ -37,9 +37,9 @@ npm run devStart
 * Clean up Styling on Project Page
   * Section Banners Cleaner
   * Scroll bar not default
-  * Table row hover color
-  * New row button styling
-  * Save and Exit Button Styling
+  * ~~Table row hover color~~
+  * ~~New row button styling~~
+  * ~~Save and Exit Button Styling~~
   * Project Details section styling
 * Functionality on Project page
   * Delete row Deletes from DB
