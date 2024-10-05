@@ -11,6 +11,7 @@ A data management web application to be used by the Vertical Lead of Financial S
 ### Dependencies
 
 *    "body-parser": "^1.20.3",
+*    "bootstrap": "^5.3.3",
 *    "ejs": "^3.1.10",
 *    "ejs-lint": "^2.0.0",
 *    "express": "^4.19.2",
