@@ -42,9 +42,10 @@ npm run devStart
   * ~~Save and Exit Button Styling~~
   * Project Details section styling
 * Functionality on Project page
+  * ~~New sheet manual entry table placement~~
   * Delete row Deletes from DB
   * Time sheets file upload entry method
-  * ~~New sheet manual entry table placement~~
+ 
 *Clean and comment all code
   
   
