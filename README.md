@@ -44,7 +44,7 @@ npm run devStart
 * Functionality on Project page
   * Delete row Deletes from DB
   * Time sheets file upload entry method
-  * New sheet manual entry table placement
+  * ~~New sheet manual entry table placement~~
 *Clean and comment all code
   
   
