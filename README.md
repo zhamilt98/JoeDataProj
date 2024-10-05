@@ -45,8 +45,7 @@ npm run devStart
   * ~~New sheet manual entry table placement~~
   * Delete row Deletes from DB
   * Time sheets file upload entry method
- 
-*Clean and comment all code
+* Clean and comment all code
   
   
   
