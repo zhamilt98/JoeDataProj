@@ -61,7 +61,7 @@
             <div class="container-lg my-5">
               <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#invsTable" role="button" aria-expanded="true" aria-controls="invsTable"><h3>Invoices</h3></button>
               <div class="collapse show" id="invsTable">
-              <table class="table">
+              <table class="table table-hover">
                 <thead>
                   <tr>
                       <th>Invoice Num</th>
@@ -96,9 +96,10 @@
               <button type="button" onclick="addInvsRow()" class="btn btn-primary">New Invoice</button>
               </div>
             </div>
-            <div class="container-lg my-5">
+            <div id="timesheets" class="container-lg my-5">
               <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#tSheets" role="button" aria-expanded="true" aria-controls="tSheets"><h3>Timesheets</h3></button>
               <div class="collapse show" id="tSheets">
+                <div id="sheets">
                 <% 
                 function getUniqueValues(arr, key) {
                     return [...new Set(arr.map(obj => obj[key]))];
@@ -106,15 +107,15 @@
                 if(locals.times){
                   const uniqueSheets = getUniqueValues(times, 'SheetID');
                     uniqueSheets.forEach((sheet)=> {%>
-                        <p class="collapsible active">Timesheet <%=sheet%></p>
+                        <p>Timesheet <%=sheet%></p>
                         <div style="display: block;">
-                        <table class="table">
+                        <table class="table table-hover">
                         <tr>
                             <th>Consultant</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Hours</th>
-                            <td><button class="delete-TS btn btn-primary" type="button" data-id="<%= sheet %>">X</button></td>
+                            <th><button class="delete-TS btn btn-primary" type="button" data-id="<%= sheet %>">X</button></th>
                         </tr>
                         <%locals.times.forEach((tim)=> {
                             
@@ -132,7 +133,7 @@
                     </table>
                   </div>
                 <%})};%>
-              
+              </div>
           
                 <button type="button" onclick="addTimesheet()" class="btn btn-primary">New Sheet</button>
               </div>
@@ -187,7 +188,7 @@
         const text = document.createElement("p");
         const table = document.createElement("table");
         table.classList="table";
-        const div = document.getElementById("timesheets")
+        const div = document.getElementById("sheets")
         const header = table.createTHead()
         var row = header.insertRow(0); 
         const hCell1 = row.insertCell();
