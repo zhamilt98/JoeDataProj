@@ -1,7 +1,7 @@
 import express from 'express'
 const router = express.Router()
 import {getConsults,getInvoices,getTimesheets,selectProject, updateProject} from '../db.js'
-
+router.use(express.static(import.meta.dirname+'/images'))
 
 router
     .get("/:proj", async (req, res) => {

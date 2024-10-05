@@ -4,22 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" type="text/css" href="main.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="/main.min.css" rel="stylesheet">
     <title>My Website</title>
 
   </head>
   <body>
     <main>
+      <div class="bg-image" style = "background-image:url( '/background.jpg');min-height:100vh; height: 100% ;width:100vw;background-size: cover; 
+                        background-position: center;">
+        <div class="container-lg text-light text-center overflow-auto ">
         <h1>Welcome to My Website</h1>
-        <a id= "newBtn" href="/project"><img src="add.png" ><p>New</p></a>
-        <a id= "editBtn" onclick="showSelect()" ><img src="edit.png" ><p>Edit</p></a>
-        <div id="selectBox">
+        <div class="row">
+          <div class="col my-5">
+        <a class="link-underline link-underline-opacity-0" id= "newBtn" href="/project"><img src="add.png" ><h2 class="text-light my-4">New</h2></a>
+      </div>
+      <div class="col my-5">
+        <a class="link-underline link-underline-opacity-0" id= "editBtn" data-bs-toggle="collapse" href="#selectBox" role="button" aria-expanded="false" aria-controls="selectBox"><img src="edit.png" ><h2 class="text-light my-4">Edit</h2></a>
+        </div>
+        <div class="collapse" id="selectBox">
         <select name="projects" id="proj">
           <% locals.projs.forEach((proj)=> {%>
             <option value=<%=proj.Proj_Name%>><%=proj.Proj_Name%></option>
           <%});%>
         </select>
+      
         <a id="submitBtn" href="/project/<%=locals.projs[0].Proj_Name%>"><button>Submit</button></a>
+      </div>
+      </div>
+    </div>
       </div>
     </main>
 	<script>    
