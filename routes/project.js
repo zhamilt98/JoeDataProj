@@ -28,7 +28,6 @@ router
 
 
         await deleteRow(req.query.id,req.params.proj)
-        console.log("Delete!"+req.query.id)
         res.send(response.ok)
     })
 
