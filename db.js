@@ -33,7 +33,17 @@ export async function selectProject(proj) {
     const [row] = await pool.query('Select * from project where Proj_Name = ?',[proj])
     return row[0]
 }
-
+export async function deleteRow(id,proj) {
+    if(id.startsWith('Inv')){
+        let num = parseInt(id.replace('Inv',''));
+        await pool.query('DELETE FROM invoice where Proj_Name = ? and InvoiceNum = ?',[proj,num])
+    }else if(id.startsWith('Con')){
+        let con = id.replace('Con','')
+        
+        await pool.query('DELETE FROM consultants where Placement = ?',[con])
+    }
+    
+}
 export async function updateProject(body) {
     try { 
         let formRows =[]

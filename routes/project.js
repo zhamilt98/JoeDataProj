@@ -1,6 +1,6 @@
-import express from 'express'
+import express, { response } from 'express'
 const router = express.Router()
-import {getConsults,getInvoices,getTimesheets,selectProject, updateProject} from '../db.js'
+import {getConsults,getInvoices,getTimesheets,selectProject, updateProject,deleteRow} from '../db.js'
 router.use(express.static(import.meta.dirname+'/images'))
 
 router
@@ -24,8 +24,12 @@ router
         await updateProject(req.body,project)
         res.redirect('/')
     })
-    .delete((req, res) => {
-        res.render('project' , {info : "Test"})
+    .delete("/:proj",async(req, res) => {
+
+
+        await deleteRow(req.query.id,req.params.proj)
+        console.log("Delete!"+req.query.id)
+        res.send(response.ok)
     })
 
     router
