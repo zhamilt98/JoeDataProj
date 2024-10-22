@@ -25,7 +25,7 @@ export async function getProjects() {
     return rows
 }
 export async function getTimesheets(proj) {
-    const [rows] = await pool.query('Select SheetID,ConsultantFN,ConsultantLN,timesheets.Start_Date,timesheets.End_Date,Hours from timesheets join consultants on timesheets.ConsultantID = consultants.ConsultantID where consultants.Proj_Name = ?', [proj])
+    const [rows] = await pool.query('Select SheetID,ConsultantFN,ConsultantLN,timesheets.ConsultantID,timesheets.Start_Date,timesheets.End_Date,Hours from timesheets join consultants on timesheets.ConsultantID = consultants.ConsultantID where consultants.Proj_Name = ?', [proj])
     return rows
 }
 
@@ -41,6 +41,16 @@ export async function deleteRow(id, proj) {
         let con = id.replace('Con', '')
 
         await pool.query('DELETE FROM consultants where Placement = ?', [con])
+    } else if (id.startsWith('Tim')) {
+        let tim = id.replace('Tim', '').split('-')
+        let c = tim[0]
+        let s = tim[1]
+        await pool.query('DELETE FROM timesheets where SheetID = ? and  ConsultantID = ?', [s, c])
+    }
+    else if (id.startsWith('Sht')) {
+        let sht = id.replace('Sht', '')
+
+        await pool.query('DELETE FROM timesheets where SheetID = ?', [sht])
     }
 
 }

@@ -23,16 +23,29 @@
         <h1 class="bg-secondary my-5">Welcome to Project <%=locals.name%>
         </h1>
         <form action="/project/<%=locals.name%>" method="POST">
-          <h3>Project Details</h3>
-          <%let term=new Date(parseInt(locals.term));%>
-            <input class="form-control text-light w-auto d-inline" type="text" name="Proj_Name"
-              value="<%=locals.name%>" />
-            <input class="form-control text-light w-auto d-inline" type="text" name="NTE_AMT" value=<%=locals.NTE || ""
-              %>>
-            <input class="form-control text-light w-auto d-inline" type="text" name="Term"
-              value="<%=term.toLocaleDateString() %>">
-            <input class="form-control text-light w-auto d-inline" type="text" name="PrcsNum" value=<%=locals.purchase
-              || "" %>>
+          <h2>Project Details</h2>
+          <%let term=new Date(parseInt(locals.term)); let USDollar=new Intl.NumberFormat('en-US', { style: 'currency' ,
+            currency: 'USD' , }); %>
+            <div class="w-auto d-inline-block">
+              <h5>Proj Name</h5>
+              <input class=" form-control text-light w-auto d-inline" type="text" name="Proj_Name"
+                value="<%=locals.name%>" />
+            </div>
+            <div class="w-auto d-inline-block">
+              <h5>Net Amount</h5>
+              <input class=" form-control text-light w-auto d-inline" type="text" name="NTE_AMT"
+                value='<%=USDollar.format(locals.NTE) || "" %>'>
+            </div>
+            <div class="w-auto d-inline-block">
+              <h5>Term</h5>
+              <input class="form-control text-light w-auto d-inline" type="text" name="Term"
+                value="<%=term.toLocaleDateString() %>">
+            </div>
+            <div class="w-auto d-inline-block">
+              <h5>Purchase Number</h5>
+              <input class="form-control text-light w-auto d-inline" type="text" name="PrcsNum" value=<%=locals.purchase
+                || "" %>>
+            </div>
             <div class="container-lg my-5">
               <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#consTable"
                 role="button" aria-expanded="true" aria-controls="consTable">
@@ -67,9 +80,9 @@
                         <td><input class="form-control text-light w-auto" type="text" name="Recruiter"
                             value="<%=con.Recruiter%>"></td>
                         <td><input class="form-control text-light w-auto" type="text" name="Bill_Rate"
-                            value="<%=con.Bill_Rate%>"></td>
+                            value="<%=USDollar.format(con.Bill_Rate)%>"></td>
                         <td><input class="form-control text-light w-auto" type="text" name="Pay_Rate"
-                            value="<%=con.Pay_Rate%>"></td>
+                            value="<%=USDollar.format(con.Pay_Rate)%>"></td>
                         <td><button class="delete-row btn btn-primary" type="button"
                             data-id="Con<%= con.Placement %>">X</button></td>
                       </tr>
@@ -109,11 +122,12 @@
                         <td><input class="form-control text-light w-auto" type="text" name="Anticipated_Date"
                             value="<%=ant.toLocaleDateString()%>"></td>
                         <td><input class="form-control text-light w-auto" type="text" name="Billables"
-                            value="<%=inv.Billables%>"></td>
+                            value="<%=USDollar.format(inv.Billables)%>"></td>
                         <td><input class="form-control text-light w-auto" type="text" name="Expenses"
-                            value="<%=inv.Expenses%>"></td>
+                            value="<%=USDollar.format(inv.Expenses)%>"></td>
                         <td><input class="form-control text-light w-auto" type="text" name="Surplus"
-                            value="<%=inv.Surplus%>"></td>
+                            value="<%=USDollar.format(inv.Surplus)%>">
+                        </td>
                         <td><input class="form-control text-light w-auto" type="text" name="Sent_Accounting"
                             value="<%=acc.toLocaleDateString()%>"></td>
                         <td><input class="form-control text-light w-auto" type="text" name="Sent_Coupa"
@@ -151,10 +165,10 @@
                           <th>End Date</th>
                           <th>Hours</th>
                           <th><button class="delete-TS btn btn-primary" type="button"
-                              data-id="Sht<%= sheet %>">X</button></th>
+                              data-id="Sht<%= sheet %>">X</button>
+                          </th>
                         </tr>
                         <%locals.times.forEach((tim)=> {
-
                           if(tim.SheetID==sheet){
                           let startTS=new Date(parseInt(tim.Start_Date));
                           let endTS=new Date(parseInt(tim.End_Date));%>
@@ -168,7 +182,8 @@
                             <td><input class="form-control text-light w-auto" type="text" name="hoursTS"
                                 value="<%=tim.Hours%>"></td>
                             <td><button class="delete-row btn btn-primary" type="button"
-                                data-id="Tim<%= tim.ConsultantFN+' '+tim.ConsultantLN %>">X</button></td>
+                                data-id="Tim<%= tim.ConsultantID+'-'+tim.SheetID %>">X</button>
+                            </td>
                           </tr>
                           <%}});%>
                       </table>
@@ -379,16 +394,18 @@
           const confirmed = confirm("Are you sure you want to delete this row? \n This action cannot be undone!");
           const rowId = this.dataset.id;
           console.log(rowId)
-          // fetch(`/delete/${rowId}`, { method: 'DELETE' })
-          //   .then(response => {
-          //     if (response.ok) {
-          // Row successfully deleted, remove it from the DOM
-          if (confirmed) {
-            this.closest('table').remove();
-          }
-          else {
-            console.log("canceled")
-          }
+          fetch(`/project/<%=locals.name%>?id=${rowId}`, { method: 'DELETE' })
+            .then(response => {
+              if (response.ok) {
+                // Row successfully deleted, remove it from the DOM
+                if (confirmed) {
+                  this.closest('table').remove();
+                }
+                else {
+                  console.log("canceled")
+                }
+              }
+            });
         });
       });
     </script>
