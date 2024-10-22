@@ -11,7 +11,7 @@ import { getProjects } from './db.js';
 
 
 // Set up routes for the application
-app.get('/', async  (req, res) => {
+app.get('/', async (req, res) => {
     // Get projects from the database
     const ps = await getProjects();
     res.render('main', { projs: ps });
@@ -28,7 +28,7 @@ app.use('/project', projRouter);
 // Start the server and listen on port 3000
 const port = 3000;
 app.listen(port, () => {
-console.log(`Server listening on port ${port}`);
+    console.log(`Server listening on port ${port}`);
 });
 
 

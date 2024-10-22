@@ -1,9 +1,9 @@
-$primary: #650360; 
+$primary: #650360;
 $secondary: #300942;
-$table-bg:rgba(0, 0, 0, 0);
-$table-color:white;
-$table-hover-color:$secondary;
-$table-hover-bg-factor:.4;
-$input-bg:rgba(0, 0, 0, 0);
-$font-family-sans-serif:"Helvetica",sans-serif,monospace;
+$table-bg: rgba(0, 0, 0, 0);
+$table-color: white;
+$table-hover-color: $secondary;
+$table-hover-bg-factor: .4;
+$input-bg: rgba(0, 0, 0, 0);
+$font-family-sans-serif: "Helvetica", sans-serif, monospace;
 @import '../node_modules/bootstrap/scss/bootstrap';
