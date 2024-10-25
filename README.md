@@ -40,11 +40,13 @@ npm run devStart
   * ~~Table row hover color~~
   * ~~New row button styling~~
   * ~~Save and Exit Button Styling~~
-  * Project Details section styling
+  * ~~Project Details section styling~~
+  * Timesheet button spacings (add row and new sheet buttons)
+  * spacing around time sheet titles
 * Functionality on Project page
   * ~~New sheet manual entry table placement~~
-  * Delete row Deletes from DB
-  * Time sheets file upload entry method
+  * ~~Delete row Deletes from DB~~
+  * ~~Time sheets file upload entry method~~
 * Clean and comment all code
   
   
